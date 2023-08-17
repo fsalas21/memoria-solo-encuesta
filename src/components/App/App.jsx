@@ -1,3 +1,4 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import SurveyForm from '../Survey/Survey.jsx';
 import RequireAuth from '../Auth/RequireAuth.jsx';

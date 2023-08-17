@@ -33,7 +33,7 @@ const OTRO_QUESTION = 'Detalle qué otros motivos lo habrían motivado a dejar l
 const MAX_RUT_WIDTH = 10;
 const MAX_ROL_WIDTH = 11;
 
-const STEPS = ['Datos Personales', 'Motivos Gobales', 'Motivos Específicos', 'Finalizar'];
+const STEPS = ['Datos Personales', 'Motivos Globales', 'Motivos Específicos', 'Finalizar'];
 const GENDERS = ['Femenino', 'Masculino', 'No Binario', 'No deseo responder'];
 
 export default function SurveyForm() {
