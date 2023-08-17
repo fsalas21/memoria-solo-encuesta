@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
+
+.FirstCard .TitleSection {
+    background-color: #00498A;
+    color: #fdfdfd;
+    text-shadow: rgba(0, 0, 0, 0.63) 1px 0px;
+}
+
+.cardSubtitle {
+    color: rgb(126, 126, 126);
+}
+
+.paperTest {
+    padding-left: 20px;
+    padding-bottom: 15px;
+}
+
+.global-container {
+    margin: 20px 30px 20px 30px;
+    justify-content: center;
+    align-items: center;
+}
+
+.sectionCard {
+    padding-top: 10px;
+}
+
+.stepperButton {
+    font-family: 'Fira Sans', sans-serif !important;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    text-transform: capitalize !important;
+}
+
+.anonMessage {
+    color: #7e7e7e;
+}
