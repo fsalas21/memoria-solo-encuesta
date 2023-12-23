@@ -49,7 +49,8 @@ export default function SurveyForm() {
     const [primerApellido, setPrimerApellido] = React.useState("");
     const [segundoApellido, setSegundoApellido] = React.useState("");
     const [genero, setGenero] = React.useState("");
-    const [carrera, setCarrera] = React.useState("");
+    const [carreraInicial, setCarreraInicial] = React.useState("");
+    const [carreraCambiada, setCarreraCambiada] = React.useState("");
     const [annoIngresoUni, setAnnoIngresoUni] = React.useState("");
     const [annoRetiroUni, setAnnoRetiroUni] = React.useState("");
     const [semestreRetiro, setSemestreRetiro] = React.useState("");
@@ -122,8 +123,15 @@ export default function SurveyForm() {
 
     function handleCareerChange(e) {
         let updateCareer = {};
-        setCarrera(e.target.value);
-        updateCareer = { carrera: e.target.value };
+        setCarreraCambiada(e.target.value);
+        updateCareer = { carreraCambiada: e.target.value };
+        setJson(jsonString => ({ ...jsonString, ...updateCareer }));
+    }
+
+    function handleInitialCareerChange(e) {
+        let updateCareer = {};
+        setCarreraInicial(e.target.value);
+        updateCareer = { carreraInicial: e.target.value };
         setJson(jsonString => ({ ...jsonString, ...updateCareer }));
     }
 
@@ -459,6 +467,9 @@ export default function SurveyForm() {
             anno_ingreso_universidad: jsonString.anno_ingreso_universidad ? jsonString.anno_ingreso_universidad : null,
             anno_retiro_universidad: jsonString.anno_retiro_carrera ? jsonString.anno_retiro_carrera : null,
             genero: jsonString.genero ? jsonString.genero : null,
+            carreraInicial: jsonString.carreraInicial ? jsonString.carreraInicial : null,
+            carreraCambiada: jsonString.carreraCambiada ? jsonString.carreraCambiada : null,
+            semestreRetiro: jsonString.semestre ? jsonString.semestre : null,
             rut: jsonString.rut ? jsonString.rut : null,
             rol: jsonString.rol ? jsonString.rol : null,
             campus: jsonString.campus ? jsonString.campus : null,
@@ -649,6 +660,16 @@ export default function SurveyForm() {
                                                                                 <Select value={semestreRetiro} onChange={handleSemesterChange} input={<OutlinedInput label="Semestre de retiro" />} MenuProps={MenuProps}>
                                                                                     {SEMESTERS.map((semester) => (
                                                                                         <MenuItem key={semester} value={semester}>{semester}</MenuItem>
+                                                                                    ))}
+                                                                                </Select>
+                                                                            </FormControl>
+                                                                        </Grid>
+                                                                        <Grid item xs={4}>
+                                                                            <FormControl fullWidth>
+                                                                                <InputLabel>Carrera de retiro</InputLabel>
+                                                                                <Select value={carreraInicial} onChange={handleInitialCareerChange} input={<OutlinedInput label="Carrera de retiro" />} MenuProps={MenuProps}>
+                                                                                    {CAREERS.map((career) => (
+                                                                                        <MenuItem key={career} value={career}>{career}</MenuItem>
                                                                                     ))}
                                                                                 </Select>
                                                                             </FormControl>
@@ -903,8 +924,8 @@ export default function SurveyForm() {
                                                                                     <Grid container className='sectionCard' direction={'row'}>
                                                                                         <Grid item xs={4}>
                                                                                             <FormControl fullWidth>
-                                                                                                <InputLabel>Carrera de retiro</InputLabel>
-                                                                                                <Select value={carrera} onChange={handleCareerChange} input={<OutlinedInput label="Carrera de retiro" />} MenuProps={MenuProps}>
+                                                                                                <InputLabel>Carreras</InputLabel>
+                                                                                                <Select value={carreraCambiada} onChange={handleCareerChange} input={<OutlinedInput label="Carrera" />} MenuProps={MenuProps}>
                                                                                                     {CAREERS.map((career) => (
                                                                                                         <MenuItem key={career} value={career}>{career}</MenuItem>
                                                                                                     ))}
