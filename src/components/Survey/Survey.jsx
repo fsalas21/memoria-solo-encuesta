@@ -35,6 +35,7 @@ const MAX_ROL_WIDTH = 11;
 
 const STEPS = ['Datos Personales', 'Motivos Globales', 'Motivos Específicos', 'Finalizar'];
 const GENDERS = ['Femenino', 'Masculino', 'No Binario', 'No deseo responder'];
+const SEMESTERS = ['Primer Semestre', 'Segundo Semestre'];
 
 export default function SurveyForm() {
 
@@ -46,6 +47,7 @@ export default function SurveyForm() {
     const [genero, setGenero] = React.useState("");
     const [annoIngresoUni, setAnnoIngresoUni] = React.useState("");
     const [annoRetiroUni, setAnnoRetiroUni] = React.useState("");
+    const [semestreRetiro, setSemestreRetiro] = React.useState("");
     const [annoIngresoCarrera, setAnnoIngresoCarrera] = React.useState("");
 
     const [otherFamilyReasons, setOtherFamilyReasons] = React.useState("");
@@ -104,6 +106,13 @@ export default function SurveyForm() {
         setGenero(e.target.value);
         updateGender = { genero: e.target.value };
         setJson(jsonString => ({ ...jsonString, ...updateGender }));
+    }
+
+    function handleSemesterChange(e) {
+        let updateSemester = {};
+        setSemestreRetiro(e.target.value);
+        updateSemester = { semestre: e.target.value };
+        setJson(jsonString => ({ ...jsonString, ...updateSemester }));
     }
 
     function handleOtherFamily(e) {
@@ -598,7 +607,7 @@ export default function SurveyForm() {
                                                                         </Grid>
                                                                     </Grid>
                                                                     <Grid container direction={'row'} columnSpacing={5}>
-                                                                        <Grid item xs={4}>
+                                                                        <Grid item xs={6}>
                                                                             <FormControl fullWidth>
                                                                                 <InputLabel>Género</InputLabel>
                                                                                 <Select value={genero} onChange={handleChangeGender} input={<OutlinedInput label="Género" />} MenuProps={MenuProps}>
@@ -608,10 +617,22 @@ export default function SurveyForm() {
                                                                                 </Select>
                                                                             </FormControl>
                                                                         </Grid>
-                                                                        <Grid item xs={4}>
+                                                                        <Grid item xs={6}>
+                                                                            <FormControl fullWidth>
+                                                                                <InputLabel>Género</InputLabel>
+                                                                                <Select value={semestreRetiro} onChange={handleSemesterChange} input={<OutlinedInput label="Semestre de retiro" />} MenuProps={MenuProps}>
+                                                                                    {SEMESTERS.map((semester) => (
+                                                                                        <MenuItem key={semester} value={semester}>{semester}</MenuItem>
+                                                                                    ))}
+                                                                                </Select>
+                                                                            </FormControl>
+                                                                        </Grid>
+                                                                    </Grid>
+                                                                    <Grid container direction={'row'} columnSpacing={5}>
+                                                                        <Grid item xs={6}>
                                                                             <TextField id='rut' label='RUT' inputProps={{ pattern: '[0-9]*-[0-9]', maxLength: 10 }} error={rut.length > MAX_RUT_WIDTH || /[a-zA-Z]/.test(rut)} helperText={errorRutMessage} onChange={handleRUT} fullWidth required />
                                                                         </Grid>
-                                                                        <Grid item xs={4}>
+                                                                        <Grid item xs={6}>
                                                                             <TextField id='rol' label='Rol USM' inputProps={{ pattern: '[0-9]*-[0-9]', maxLength: 11 }} error={rol.length > MAX_ROL_WIDTH || /[a-zA-Z]/.test(rol)} helperText={errorRolMessage} onChange={handleRol} fullWidth required />
                                                                         </Grid>
                                                                     </Grid>
@@ -881,7 +902,7 @@ export default function SurveyForm() {
                                                     <div style={{ display: activeStep === 3 ? 'block' : 'none' }}>
                                                         <Card variant='outlined'>
                                                             <CardContent>
-                                                                <Typography variant='h4' align='center' > Antes de enviar la encuesta, le agradecemos su tiempo.<br />Estos datos nos ayudarán a mejorar como departemento. </Typography>
+                                                                <Typography variant='h4' align='center' > Antes de enviar la encuesta, le agradecemos su tiempo.<br />Estos datos nos ayudarán a mejorar como departament. </Typography>
                                                                 <ColoredLine color='#E0E0E0' />
                                                                 <Typography className='anonMessage' variant='body2' align='center'> Le recordamos que esta encuesta es <b>anónima</b> y sus datos personales no serán usados. </Typography>
                                                             </CardContent>
