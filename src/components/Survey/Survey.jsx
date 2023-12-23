@@ -24,6 +24,9 @@ const RA_SECOND_QUESTION = 'La Universidad influyó en tus problemas de rendimie
 const AU_TITLE = 'Ambiente Universitario';
 const AU_QUESTION = '¿Cuál de las siguientes alternativas refleja mejor su problema?';
 
+const CAREER_TITLE = 'Cambio de Carrera';
+const CAREER_QUESTION = '¿A qué carrera decidió cambiarse?';
+
 const DETAIL_QUESTION = 'Detalles de su respuesta anterior.';
 const DETAIL_OTHER_QUESTION = 'Detalles sus otros motivos de la pregunta anterior.';
 
@@ -36,6 +39,7 @@ const MAX_ROL_WIDTH = 11;
 const STEPS = ['Datos Personales', 'Motivos Globales', 'Motivos Específicos', 'Finalizar'];
 const GENDERS = ['Femenino', 'Masculino', 'No Binario', 'No deseo responder'];
 const SEMESTERS = ['Primer Semestre', 'Segundo Semestre'];
+const CAREERS = ['Ingeniería Civil Informática', 'Ingeniería Civil Matemática', 'Ingeniería Civil Industrial'];
 
 export default function SurveyForm() {
 
@@ -45,6 +49,7 @@ export default function SurveyForm() {
     const [primerApellido, setPrimerApellido] = React.useState("");
     const [segundoApellido, setSegundoApellido] = React.useState("");
     const [genero, setGenero] = React.useState("");
+    const [carrera, setCarrera] = React.useState("");
     const [annoIngresoUni, setAnnoIngresoUni] = React.useState("");
     const [annoRetiroUni, setAnnoRetiroUni] = React.useState("");
     const [semestreRetiro, setSemestreRetiro] = React.useState("");
@@ -115,6 +120,13 @@ export default function SurveyForm() {
         setJson(jsonString => ({ ...jsonString, ...updateSemester }));
     }
 
+    function handleCareerChange(e) {
+        let updateCareer = {};
+        setCarrera(e.target.value);
+        updateCareer = { carrera: e.target.value };
+        setJson(jsonString => ({ ...jsonString, ...updateCareer }));
+    }
+
     function handleOtherFamily(e) {
         let updateOtherFamily = {};
         setOtherFamilyReasons(e.target.value);
@@ -182,6 +194,7 @@ export default function SurveyForm() {
         { id: 'VOC', acronym: 'VOC', name: VOC_SECTION_TITLE, isGlobalChecked: false },
         { id: 'RA', acronym: 'RA', name: RA_TITLE, isGlobalChecked: false },
         { id: 'AU', acronym: 'AU', name: AU_TITLE, isGlobalChecked: false },
+        { id: 'CARR', acronym: 'CAR', name: 'Cambio de carrera', isGlobalChecked: false },
         { id: 'Otro', acronym: 'Otro', name: OTRO_TITLE, isGlobalChecked: false }
     ]);
 
@@ -429,38 +442,43 @@ export default function SurveyForm() {
             console.log('jsonString', jsonString);
             console.log(jsonString.rol);
             console.log(jsonString?.nombre);
-            let date = new Date().toISOString().slice(0, 23);
-            let respuesta = {
-                fecha: date,
-                nombre: jsonString.nombre ? jsonString.nombre : null,
-                apellido_paterno: jsonString.apellido_paterno ? jsonString.apellido_paterno : null,
-                apellido_materno: jsonString.apellido_materno ? jsonString.apellido_materno : null,
-                anno_ingreso_carrera: jsonString.anno_ingreso_carrera ? jsonString.anno_ingreso_carrera : null,
-                anno_ingreso_universidad: jsonString.anno_ingreso_universidad ? jsonString.anno_ingreso_universidad : null,
-                anno_retiro_universidad: jsonString.anno_retiro_carrera ? jsonString.anno_retiro_carrera : null,
-                genero: jsonString.genero ? jsonString.genero : null,
-                rut: jsonString.rut ? jsonString.rut : null,
-                rol: jsonString.rol ? jsonString.rol : null,
-                campus: jsonString.campus ? jsonString.campus : null,
-                razones: jsonString.razones ? jsonString.razones : [],
-                OTHER_SEF: jsonString.OTHER_SEF ? jsonString.OTHER_SEF : "-",
-                OTHER_VOC: jsonString.OTHER_VOC ? jsonString.OTHER_VOC : "-",
-                OTHER_RA1: jsonString.OTHER_RA1 ? jsonString.OTHER_RA1 : "-",
-                OTHER_RA2: jsonString.OTHER_RA2 ? jsonString.OTHER_RA2 : "-",
-                OTHER_AU: jsonString.OTHER_AU ? jsonString.OTHER_AU : "-",
-                otro_motivo: jsonString.otro_motivo ? jsonString.otro_motivo : "-",
-                SEF: jsonString.SEF ? jsonString.SEF : [],
-                VOC: jsonString.VOC ? jsonString.VOC : [],
-                RA1: jsonString.RA1 ? jsonString.RA1 : [],
-                RA2: jsonString.RA2 ? jsonString.RA2 : [],
-                AU: jsonString.AU ? jsonString.AU : [],
-                Detail_AU: jsonString.Detail_AU ? jsonString.Detail_AU : "-",
-                Detail_VOC: jsonString.Detail_VOC ? jsonString.Detail_VOC : "-"
-            };
+            let respuesta = formatJSONResponse(jsonString);
             addRespuesta(respuesta);
             updateStudent(respuesta.rut);
         }
     };
+
+    function formatJSONResponse(jsonString) {
+        let date = new Date().toISOString().slice(0, 23);
+        let response = {
+            fecha: date,
+            nombre: jsonString.nombre ? jsonString.nombre : null,
+            apellido_paterno: jsonString.apellido_paterno ? jsonString.apellido_paterno : null,
+            apellido_materno: jsonString.apellido_materno ? jsonString.apellido_materno : null,
+            anno_ingreso_carrera: jsonString.anno_ingreso_carrera ? jsonString.anno_ingreso_carrera : null,
+            anno_ingreso_universidad: jsonString.anno_ingreso_universidad ? jsonString.anno_ingreso_universidad : null,
+            anno_retiro_universidad: jsonString.anno_retiro_carrera ? jsonString.anno_retiro_carrera : null,
+            genero: jsonString.genero ? jsonString.genero : null,
+            rut: jsonString.rut ? jsonString.rut : null,
+            rol: jsonString.rol ? jsonString.rol : null,
+            campus: jsonString.campus ? jsonString.campus : null,
+            razones: jsonString.razones ? jsonString.razones : [],
+            OTHER_SEF: jsonString.OTHER_SEF ? jsonString.OTHER_SEF : "-",
+            OTHER_VOC: jsonString.OTHER_VOC ? jsonString.OTHER_VOC : "-",
+            OTHER_RA1: jsonString.OTHER_RA1 ? jsonString.OTHER_RA1 : "-",
+            OTHER_RA2: jsonString.OTHER_RA2 ? jsonString.OTHER_RA2 : "-",
+            OTHER_AU: jsonString.OTHER_AU ? jsonString.OTHER_AU : "-",
+            otro_motivo: jsonString.otro_motivo ? jsonString.otro_motivo : "-",
+            SEF: jsonString.SEF ? jsonString.SEF : [],
+            VOC: jsonString.VOC ? jsonString.VOC : [],
+            RA1: jsonString.RA1 ? jsonString.RA1 : [],
+            RA2: jsonString.RA2 ? jsonString.RA2 : [],
+            AU: jsonString.AU ? jsonString.AU : [],
+            Detail_AU: jsonString.Detail_AU ? jsonString.Detail_AU : "-",
+            Detail_VOC: jsonString.Detail_VOC ? jsonString.Detail_VOC : "-"
+        };
+        return response;
+    }
 
     function addRespuesta(respuesta) {
         axios.post("https://us-east-1.aws.data.mongodb-api.com/app/application-0-ckkdo/endpoint/api/encuestasRespondidas", respuesta)
@@ -584,7 +602,7 @@ export default function SurveyForm() {
                                                         <Card variant='outlined'>
                                                             <CardContent>
                                                                 <Box component='form' autoComplete='off' sx={{ '& .MuiTextField-root': { mb: 2 } }}>
-                                                                    <Grid container direction={'row'} spacing={5}>
+                                                                    <Grid container direction={'row'} columnSpacing={5}>
                                                                         <Grid item xs={4}>
                                                                             <TextField id='nombre' label='Nombre' inputProps={{ style: { textTransform: 'capitalize' } }} value={nombre} onChange={handleName} fullWidth required />
                                                                         </Grid>
@@ -595,7 +613,25 @@ export default function SurveyForm() {
                                                                             <TextField id='apellido_materno' inputProps={{ style: { textTransform: 'capitalize' } }} label='Apellido Materno' value={segundoApellido} onChange={handleSecondLastName} fullWidth required />
                                                                         </Grid>
                                                                     </Grid>
-                                                                    <Grid container direction={'row'} spacing={5}>
+                                                                    <Grid container direction={'row'} columnSpacing={5}>
+                                                                        <Grid item xs={4}>
+                                                                            <FormControl fullWidth>
+                                                                                <InputLabel>Género</InputLabel>
+                                                                                <Select value={genero} onChange={handleChangeGender} input={<OutlinedInput label="Género" />} MenuProps={MenuProps}>
+                                                                                    {GENDERS.map((gender) => (
+                                                                                        <MenuItem key={gender} value={gender}>{gender}</MenuItem>
+                                                                                    ))}
+                                                                                </Select>
+                                                                            </FormControl>
+                                                                        </Grid>
+                                                                        <Grid item xs={4}>
+                                                                            <TextField id='rut' label='RUT' inputProps={{ pattern: '[0-9]*-[0-9]', maxLength: 10 }} error={rut.length > MAX_RUT_WIDTH || /[a-zA-Z]/.test(rut)} helperText={errorRutMessage} onChange={handleRUT} fullWidth required />
+                                                                        </Grid>
+                                                                        <Grid item xs={4}>
+                                                                            <TextField id='rol' label='Rol USM' inputProps={{ pattern: '[0-9]*-[0-9]', maxLength: 11 }} error={rol.length > MAX_ROL_WIDTH || /[a-zA-Z]/.test(rol)} helperText={errorRolMessage} onChange={handleRol} fullWidth required />
+                                                                        </Grid>
+                                                                    </Grid>
+                                                                    <Grid container direction={'row'} columnSpacing={5}>
                                                                         <Grid item xs={4}>
                                                                             <TextField id='anno_ingreso_carrera' inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', maxLength: 4 }} label='Año de ingreso a la carrera' value={annoIngresoCarrera} onChange={handleAnoIngresoCarrera} fullWidth required />
                                                                         </Grid>
@@ -607,19 +643,9 @@ export default function SurveyForm() {
                                                                         </Grid>
                                                                     </Grid>
                                                                     <Grid container direction={'row'} columnSpacing={5}>
-                                                                        <Grid item xs={6}>
+                                                                        <Grid item xs={4}>
                                                                             <FormControl fullWidth>
-                                                                                <InputLabel>Género</InputLabel>
-                                                                                <Select value={genero} onChange={handleChangeGender} input={<OutlinedInput label="Género" />} MenuProps={MenuProps}>
-                                                                                    {GENDERS.map((gender) => (
-                                                                                        <MenuItem key={gender} value={gender}>{gender}</MenuItem>
-                                                                                    ))}
-                                                                                </Select>
-                                                                            </FormControl>
-                                                                        </Grid>
-                                                                        <Grid item xs={6}>
-                                                                            <FormControl fullWidth>
-                                                                                <InputLabel>Género</InputLabel>
+                                                                                <InputLabel>Semestre de retiro</InputLabel>
                                                                                 <Select value={semestreRetiro} onChange={handleSemesterChange} input={<OutlinedInput label="Semestre de retiro" />} MenuProps={MenuProps}>
                                                                                     {SEMESTERS.map((semester) => (
                                                                                         <MenuItem key={semester} value={semester}>{semester}</MenuItem>
@@ -628,15 +654,7 @@ export default function SurveyForm() {
                                                                             </FormControl>
                                                                         </Grid>
                                                                     </Grid>
-                                                                    <Grid container direction={'row'} columnSpacing={5}>
-                                                                        <Grid item xs={6}>
-                                                                            <TextField id='rut' label='RUT' inputProps={{ pattern: '[0-9]*-[0-9]', maxLength: 10 }} error={rut.length > MAX_RUT_WIDTH || /[a-zA-Z]/.test(rut)} helperText={errorRutMessage} onChange={handleRUT} fullWidth required />
-                                                                        </Grid>
-                                                                        <Grid item xs={6}>
-                                                                            <TextField id='rol' label='Rol USM' inputProps={{ pattern: '[0-9]*-[0-9]', maxLength: 11 }} error={rol.length > MAX_ROL_WIDTH || /[a-zA-Z]/.test(rol)} helperText={errorRolMessage} onChange={handleRol} fullWidth required />
-                                                                        </Grid>
-                                                                    </Grid>
-                                                                    <Grid container direction={'row'} justifyContent='center'>
+                                                                    <Grid container className='sectionCard' direction={'row'} spacing={5} justifyContent='center'>
                                                                         <Grid item xs>
                                                                             <Card variant='outlined'>
                                                                                 <CardContent>
@@ -878,6 +896,30 @@ export default function SurveyForm() {
                                                                         <ColoredLine color='#E0E0E0' />
                                                                         <Card className='sectionCard' variant='outlined'>
                                                                             <CardContent>
+                                                                                <Typography variant='h3' align='center' > {CAREER_TITLE} </Typography>
+                                                                                <ColoredLine color='#E0E0E0' />
+                                                                                <Typography className='cardSubtitle' variant='body'>{CAREER_QUESTION}</Typography>
+                                                                                <Paper className='paperTest' elevation={0}>
+                                                                                    <Grid container className='sectionCard' direction={'row'}>
+                                                                                        <Grid item xs={4}>
+                                                                                            <FormControl fullWidth>
+                                                                                                <InputLabel>Carrera de retiro</InputLabel>
+                                                                                                <Select value={carrera} onChange={handleCareerChange} input={<OutlinedInput label="Carrera de retiro" />} MenuProps={MenuProps}>
+                                                                                                    {CAREERS.map((career) => (
+                                                                                                        <MenuItem key={career} value={career}>{career}</MenuItem>
+                                                                                                    ))}
+                                                                                                </Select>
+                                                                                            </FormControl>
+                                                                                        </Grid>
+                                                                                    </Grid>
+                                                                                </Paper>
+                                                                            </CardContent>
+                                                                        </Card>
+                                                                    </div>
+                                                                    <div style={{ display: globalReasons[5].isGlobalChecked ? 'block' : 'none' }}>
+                                                                        <ColoredLine color='#E0E0E0' />
+                                                                        <Card className='sectionCard' variant='outlined'>
+                                                                            <CardContent>
                                                                                 <Typography variant='h3' align='center' > {OTRO_TITLE} </Typography>
                                                                                 <ColoredLine color='#E0E0E0' />
                                                                                 <Typography className='cardSubtitle' variant='body'>{OTRO_QUESTION}</Typography>
@@ -902,7 +944,7 @@ export default function SurveyForm() {
                                                     <div style={{ display: activeStep === 3 ? 'block' : 'none' }}>
                                                         <Card variant='outlined'>
                                                             <CardContent>
-                                                                <Typography variant='h4' align='center' > Antes de enviar la encuesta, le agradecemos su tiempo.<br />Estos datos nos ayudarán a mejorar como departament. </Typography>
+                                                                <Typography variant='h4' align='center' > Antes de enviar la encuesta, le agradecemos su tiempo.<br />Estos datos nos ayudarán a mejorar como departamento. </Typography>
                                                                 <ColoredLine color='#E0E0E0' />
                                                                 <Typography className='anonMessage' variant='body2' align='center'> Le recordamos que esta encuesta es <b>anónima</b> y sus datos personales no serán usados. </Typography>
                                                             </CardContent>
