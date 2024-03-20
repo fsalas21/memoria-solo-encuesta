@@ -39,7 +39,7 @@ const MAX_ROL_WIDTH = 11;
 const STEPS = ['Datos Personales', 'Motivos Globales', 'Motivos Específicos', 'Finalizar'];
 const GENDERS = ['Femenino', 'Masculino', 'No Binario', 'No deseo responder'];
 const SEMESTERS = ['Primer Semestre', 'Segundo Semestre'];
-const CAREERS = ['Ingeniería Civil Informática', 'Ingeniería Civil Matemática', 'Ingeniería Civil Industrial'];
+const CAREERS = ['Arquitectura', 'Construcción Civil', 'Ingeniería Civil', 'Ingeniería Civil Ambiental', 'Ingeniería Civil De Minas', 'Ingeniería Civil Electrónica', 'Ingeniería Civil Eléctrica', 'Ingeniería Civil Industrial', 'Ingeniería Civil Informática', 'Ingeniería Civil Matemática', 'Ingeniería Civil Mecánica', 'Ingeniería Civil Metalúrgica', 'Ingeniería Civil Plan Común', 'Ingeniería Civil Química', 'Ingeniería Civil Telemática', 'Ingeniería Comercial', 'Ingeniería En Aviación Comercial', 'Ingeniería En Diseño De Productos', 'Licenciatura En Astrofísica', 'Licenciatura En Física', 'Técnico Universitario En Mantenimiento Aeronáutico'];
 
 export default function SurveyForm() {
 
